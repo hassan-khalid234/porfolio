@@ -152,6 +152,19 @@ export default function PipelineSchematic({ project, mobile = false }) {
                     </a>
                 )}
             </div>
+            {project.stack && (
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="border px-2 py-0.5 font-mono text-[10px]"
+                        style={{ borderColor: "var(--bp-line)", color: "var(--bp-line-bright)" }}
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
         </div>
     );
 }

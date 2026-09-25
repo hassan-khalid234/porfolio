@@ -36,6 +36,7 @@ export const projects = [
             live: "https://hassan-rag-copilot.streamlit.app/",
             repo: "https://github.com/hassan-khalid234/rag-copilot",
         },
+        stack: ["PYTHON", "CHROMADB", "BM25", "GROQ", "STREAMLIT"],
     },
     {
         id: "mood-mirror",
@@ -72,6 +73,7 @@ export const projects = [
             live: "https://mood-mirror-8lj5fdjem-stash-sheep.vercel.app/",
             repo: "https://github.com/hassan-khalid234/mood-mirror",
         },
+        stack: ["FASTAPI", "HUGGINGFACE", "REACT", "VERCEL", "RENDER"],
     },
     {
         id: "subscription-intel",
@@ -105,6 +107,7 @@ export const projects = [
         links: {
             repo: "https://github.com/hassan-khalid234/subscription-ai-model",
         },
+        stack: ["FASTAPI", "SQLITE", "N8N", "GROQ", "JINJA2"],
     },
     {
         id: "medical-insurance-prediction",
@@ -135,5 +138,6 @@ export const projects = [
             live: "https://hassan-medical-insurance-cost-prediction.streamlit.app/",
             repo: "https://github.com/hassan-khalid234/medical-insurance-cost-prediction",
         },
+        stack: ["PYTHON", "SCIKIT-LEARN", "STREAMLIT", "PANDAS"],
     },
 ];
