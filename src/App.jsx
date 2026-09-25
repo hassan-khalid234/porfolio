@@ -1,12 +1,13 @@
 import GridBackground from "./components/primitives/GridBackground";
 import Hero from "./components/sections/Hero";
+import Projects from "./components/sections/Projects";
 
 export default function App() {
   return (
     <div style={{ color: "var(--bp-text)" }}>
       <GridBackground />
       <Hero />
-      <div style={{ height: "150vh" }} /> {/* scroll room to test */}
+      <Projects />
     </div>
   );
 }
