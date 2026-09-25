@@ -6,11 +6,12 @@
     --bp-bg: #0a1929;
     --bp-line: #7fb8d1;
     --bp-line-bright: #cfeeff;
-    --bp-grid: rgba(127, 184, 209, 0.08);
+    ---bp-grid: rgba(127, 184, 209, 0.14);
     --bp-text: #e8f4fb;
     --bp-accent: #ff7a45;
     --bp-unit: 8px;
     --font-mono: "IBM Plex Mono", monospace;
+    --font-sans: "Inter", sans-serif;
 }
 
 body {
@@ -21,4 +22,13 @@ body {
 a:focus-visible {
   outline: 2px solid var(--bp-line-bright);
   outline-offset: 2px;
+}
+.schematic-node rect {
+  transition: stroke 0.15s ease, fill 0.15s ease;
+}
+.schematic-node:hover rect {
+  stroke: var(--bp-line-bright) !important;
+}
+.schematic-node:hover text {
+  fill: var(--bp-line-bright) !important;
 }

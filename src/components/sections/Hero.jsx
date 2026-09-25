@@ -44,4 +44,4 @@ export default function Hero() {
       <DimensionLine label="EST. 2027 — FINAL YEAR, UMT LAHORE" length={320} />
     </section>
   );
-}
+} 

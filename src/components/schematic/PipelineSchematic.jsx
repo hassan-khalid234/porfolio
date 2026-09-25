@@ -2,16 +2,46 @@ import { motion } from "framer-motion";
 import { useDraw } from "../../hooks/useDraw";
 import { useMemo } from "react";
 
+function CornerTicks({ w, h, size = 6 }) {
+  const corners = [
+    { x: 0, y: 0, dx: 1, dy: 1 },
+    { x: w, y: 0, dx: -1, dy: 1 },
+    { x: 0, y: h, dx: 1, dy: -1 },
+    { x: w, y: h, dx: -1, dy: -1 },
+  ];
+  return (
+    <>
+      {corners.map((c, i) => (
+        <g key={i}>
+          <line
+            x1={c.x} y1={c.y}
+            x2={c.x + c.dx * size} y2={c.y}
+            stroke="var(--bp-line)" strokeWidth="1"
+          />
+          <line
+            x1={c.x} y1={c.y}
+            x2={c.x} y2={c.y + c.dy * size}
+            stroke="var(--bp-line)" strokeWidth="1"
+          />
+        </g>
+      ))}
+    </>
+  );
+}
+
 function Node({ node }) {
     const w = 110, h = 44;
     return (
-        <g transform={`translate(${node.x - w / 2}, ${node.y - h / 2})`}>
+        <g 
+        className="schematic-node"
+        transform={`translate(${node.x - w / 2}, ${node.y - h / 2})`}>
             <rect
                 width={w} height={h}
                 fill="var(--bp-bg)"
                 stroke={node.accent ? "var(--bp-accent)" : "var(--bp-line)"}
                 strokeWidth="1"
             />
+            <CornerTicks w={w} h={h} />
             <text
                 x={w / 2} y={node.sub ? h / 2 - 2 : h / 2 + 4}
                 textAnchor="middle"
