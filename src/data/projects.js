@@ -72,4 +72,37 @@ export const projects = [
             repo: "https://github.com/hassan-khalid234/mood-mirror",
         },
     },
+    {
+        id: "subscription-intel",
+        title: "AI SUBSCRIPTION INTELLIGENCE SYSTEM",
+        blurb: "FastAPI + SQLite backend, n8n workflow automation, Groq LLM API, Jinja2",
+        nodes: [
+            { id: "trigger", label: "TRIGGER", sub: "n8n workflow", x: 20, y: 90 },
+            { id: "fetch", label: "FETCH DATA", x: 180, y: 90 },
+            { id: "llm", label: "ANALYZE", sub: "Groq LLM API", x: 340, y: 90, accent: true },
+            { id: "store", label: "STORE", sub: "SQLite", x: 500, y: 90 },
+            { id: "render", label: "RENDER", sub: "Jinja2", x: 660, y: 90 },
+        ],
+        nodesMobile: [
+            { id: "trigger", x: 150, y: 20 },
+            { id: "fetch", x: 150, y: 100 },
+            { id: "llm", x: 150, y: 180 },
+            { id: "store", x: 150, y: 260 },
+            { id: "render", x: 150, y: 340 },
+        ],
+        edges: [
+            { from: "trigger", to: "fetch" },
+            { from: "fetch", to: "llm" },
+            { from: "llm", to: "store" },
+            { from: "store", to: "render" },
+        ],
+        notes: [
+            { at: "trigger", text: "REV — n8n–LangChain webhook incompatibility resolved" },
+            { at: "llm", text: "REV — Pydantic v1/v2 migration conflict resolved" },
+            { at: "render", text: "REV — FastAPI template path issue resolved; n8n trial expired, workflow no longer hosted" },
+        ],
+        links: {
+            repo: "https://github.com/hassan-khalid234/subscription-ai-model",
+        },
+    },
 ];
