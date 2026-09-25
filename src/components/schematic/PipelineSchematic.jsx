@@ -48,7 +48,9 @@ function Edge({ from, to, pathLength }) {
 }
 
 export default function PipelineSchematic({ project, mobile = false }) {
-    const { ref, pathLength } = useDraw(["start 0.8", "start 0.3"]);
+    const { ref, pathLength } = useDraw(
+        mobile ? ["start 0.95", "start 0.55"] : ["start 0.8", "start 0.3"]
+    );
     const nodes = mobile
         ? project.nodesMobile.map((m) => ({
             ...project.nodes.find((n) => n.id === m.id),
@@ -56,7 +58,7 @@ export default function PipelineSchematic({ project, mobile = false }) {
         }))
         : project.nodes;
     const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
-    const w = mobile ? 300 : 800;
+    const w = mobile ? Math.min(340, window.innerWidth - 32) : 800;
     const h = mobile ? 480 : 220;
 
     return (
