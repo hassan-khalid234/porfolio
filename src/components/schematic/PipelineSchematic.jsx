@@ -102,9 +102,15 @@ export default function PipelineSchematic({ project, mobile = false }) {
 
     return (
         <div ref={ref} className="w-full overflow-x-auto">
-            <div className="mb-3 font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
+            <div className="mb-1 font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
                 {project.title}
             </div>
+            <p
+                className="mb-4 max-w-xl text-sm leading-relaxed"
+                style={{ fontFamily: "var(--font-sans)", color: "var(--bp-text)" }}
+            >
+                {project.blurb}
+            </p>
             <svg
                 width={w} height={h} viewBox={`0 0 ${w} ${h}`}
                 className="overflow-visible"
