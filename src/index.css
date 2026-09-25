@@ -10,6 +10,7 @@
     --bp-text: #e8f4fb;
     --bp-accent: #ff7a45;
     --bp-unit: 8px;
+    --font-mono: "IBM Plex Mono", monospace;
 }
 
 body {
