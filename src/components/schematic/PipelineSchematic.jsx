@@ -13,57 +13,62 @@ function CornerTicks({ w, h, size = 6 }) {
     <>
       {corners.map((c, i) => (
         <g key={i}>
-          <line
-            x1={c.x} y1={c.y}
-            x2={c.x + c.dx * size} y2={c.y}
-            stroke="var(--bp-line)" strokeWidth="1"
-          />
-          <line
-            x1={c.x} y1={c.y}
-            x2={c.x} y2={c.y + c.dy * size}
-            stroke="var(--bp-line)" strokeWidth="1"
-          />
+          <line x1={c.x} y1={c.y} x2={c.x + c.dx * size} y2={c.y} stroke="var(--bp-line)" strokeWidth="1" />
+          <line x1={c.x} y1={c.y} x2={c.x} y2={c.y + c.dy * size} stroke="var(--bp-line)" strokeWidth="1" />
         </g>
       ))}
     </>
   );
 }
 
-function Node({ node }) {
-    const w = 110, h = 44;
-    return (
-        <g 
-        className="schematic-node"
-        transform={`translate(${node.x - w / 2}, ${node.y - h / 2})`}>
-            <rect
-                width={w} height={h}
-                fill="var(--bp-bg)"
-                stroke={node.accent ? "var(--bp-accent)" : "var(--bp-line)"}
-                strokeWidth="1"
-            />
-            <CornerTicks w={w} h={h} />
-            <text
-                x={w / 2} y={node.sub ? h / 2 - 2 : h / 2 + 4}
-                textAnchor="middle"
-                fontFamily="var(--font-mono)"
-                fontSize="10"
-                fill="var(--bp-text)"
-            >
-                {node.label}
-            </text>
-            {node.sub && (
-                <text
-                    x={w / 2} y={h / 2 + 13}
-                    textAnchor="middle"
-                    fontFamily="var(--font-mono)"
-                    fontSize="7"
-                    fill="var(--bp-line)"
-                >
-                    {node.sub}
-                </text>
-            )}
-        </g>
-    );
+function estimateWidth(text, fontSize) {
+  return Math.max(90, text.length * fontSize * 0.62 + 24);
+}
+
+function Node({ node, lead }) {
+  const labelSize = lead ? 12 : 10;
+  const subSize = lead ? 8 : 7;
+  const h = node.sub ? (lead ? 54 : 48) : (lead ? 46 : 40);
+  const w = Math.max(
+    estimateWidth(node.label, labelSize),
+    node.sub ? estimateWidth(node.sub, subSize) : 0
+  );
+
+  return (
+    <g
+      className="schematic-node"
+      transform={`translate(${node.x - w / 2}, ${node.y - h / 2})`}
+    >
+      <rect
+        width={w} height={h}
+        fill="var(--bp-bg)"
+        stroke={node.accent ? "var(--bp-accent)" : "var(--bp-line)"}
+        strokeWidth={lead ? 1.5 : 1}
+      />
+      <CornerTicks w={w} h={h} />
+      <text
+        x={w / 2} y={node.sub ? h / 2 - 3 : h / 2 + 4}
+        textAnchor="middle"
+        fontFamily="var(--font-mono)"
+        fontSize={labelSize}
+        fontWeight={lead ? 600 : 400}
+        fill="var(--bp-text)"
+      >
+        {node.label}
+      </text>
+      {node.sub && (
+        <text
+          x={w / 2} y={h / 2 + 14}
+          textAnchor="middle"
+          fontFamily="var(--font-mono)"
+          fontSize={subSize}
+          fill="var(--bp-line)"
+        >
+          {node.sub}
+        </text>
+      )}
+    </g>
+  );
 }
 
 function Edge({ from, to, pathLength }) {
