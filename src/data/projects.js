@@ -36,4 +36,40 @@ export const projects = [
             repo: "https://github.com/hassan-khalid234/rag-copilot",
         },
     },
+    {
+        id: "mood-mirror",
+        title: "MOOD MIRROR",
+        blurb: "NLP emotion-to-superhero classifier",
+        nodes: [
+            { id: "input", label: "TEXT INPUT", x: 20, y: 90 },
+            { id: "emotion", label: "EMOTION", sub: "7-class classifier", x: 200, y: 40 },
+            { id: "theme", label: "THEME", sub: "facebook/bart-large-mnli", x: 200, y: 140 },
+            { id: "merge", label: "WEIGHTED MERGE", x: 400, y: 90, accent: true },
+            { id: "threshold", label: "THRESHOLD", x: 560, y: 90 },
+            { id: "character", label: "CHARACTER", x: 720, y: 90 },
+        ],
+        nodesMobile: [
+            { id: "input", x: 150, y: 20 },
+            { id: "emotion", x: 60, y: 100 },
+            { id: "theme", x: 240, y: 100 },
+            { id: "merge", x: 150, y: 180 },
+            { id: "threshold", x: 150, y: 260 },
+            { id: "character", x: 150, y: 340 },
+        ],
+        edges: [
+            { from: "input", to: "emotion" },
+            { from: "input", to: "theme" },
+            { from: "emotion", to: "merge" },
+            { from: "theme", to: "merge" },
+            { from: "merge", to: "threshold" },
+            { from: "threshold", to: "character" },
+        ],
+        notes: [
+            { at: "threshold", text: "REV — confident: single match / mixed: dual candidate" },
+        ],
+        links: {
+            live: "https://mood-mirror-8lj5fdjem-stash-sheep.vercel.app/",
+            repo: "https://github.com/hassan-khalid234/mood-mirror",
+        },
+    },
 ];
