@@ -2,6 +2,7 @@ export const projects = [
     {
         id: "rag-copilot",
         title: "RAG COPILOT",
+        lead: true,
         blurb: "Framework-free Python RAG pipeline",
         nodes: [
             { id: "query", label: "QUERY", x: 20, y: 90 },

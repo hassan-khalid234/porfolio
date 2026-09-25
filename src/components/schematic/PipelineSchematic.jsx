@@ -102,7 +102,7 @@ export default function PipelineSchematic({ project, mobile = false }) {
 
     return (
         <div ref={ref} className="w-full overflow-x-auto">
-            <div className="mb-1 font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
+            <div className="mb-1 font-mono text-xs" style={{ color: "var(--bp-line-bright)", fontSize: project.lead ? "13px" : "11px",letterSpacing: project.lead ? "1px" : "0px",}}>
                 {project.title}
             </div>
             <p
@@ -121,7 +121,7 @@ export default function PipelineSchematic({ project, mobile = false }) {
                     <Edge key={i} from={byId[e.from]} to={byId[e.to]} pathLength={pathLength} />
                 ))}
                 {nodes.map((n) => (
-                    <Node key={n.id} node={n} />
+                    <Node key={n.id} node={n} lead={project.lead} />
                 ))}
                 {project.notes.map((note, i) => {
                     const n = byId[note.at];
