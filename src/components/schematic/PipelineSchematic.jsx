@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useDraw } from "../../hooks/useDraw";
+import { useMemo } from "react";
 
 function Node({ node }) {
     const w = 110, h = 44;
@@ -51,13 +52,16 @@ export default function PipelineSchematic({ project, mobile = false }) {
     const { ref, pathLength } = useDraw(
         mobile ? ["start 0.95", "start 0.55"] : ["start 0.8", "start 0.3"]
     );
-    const nodes = mobile
-        ? project.nodesMobile.map((m) => ({
-            ...project.nodes.find((n) => n.id === m.id),
-            ...m, // mobile x/y override desktop x/y
-        }))
-        : project.nodes;
-    const byId = Object.fromEntries(nodes.map((n) => [n.id, n]));
+    const nodes = useMemo(() => {
+        return mobile
+            ? project.nodesMobile.map((m) => ({
+                ...project.nodes.find((n) => n.id === m.id),
+                ...m,
+            }))
+            : project.nodes;
+    }, [project, mobile]);
+
+    const byId = useMemo(() => Object.fromEntries(nodes.map((n) => [n.id, n])), [nodes]);
     const w = mobile ? Math.min(340, window.innerWidth - 32) : 800;
     const h = mobile ? 480 : 220;
 
