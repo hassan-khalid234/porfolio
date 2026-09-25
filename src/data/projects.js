@@ -105,4 +105,34 @@ export const projects = [
             repo: "https://github.com/hassan-khalid234/subscription-ai-model",
         },
     },
+    {
+        id: "medical-insurance-prediction",
+        title: "MEDICAL INSURANCE COST PREDICTION",
+        blurb: "Linear regression pipeline predicting insurance charges",
+        nodes: [
+            { id: "dataset", label: "DATASET", sub: "Kaggle insurance.csv", x: 40, y: 90 },
+            { id: "eda", label: "EDA", x: 220, y: 90 },
+            { id: "clean", label: "CLEAN / ENCODE", x: 400, y: 90 },
+            { id: "train", label: "TRAIN", sub: "Linear Regression", x: 580, y: 90, accent: true },
+            { id: "predict", label: "PREDICT APP", x: 760, y: 90 },
+        ],
+        nodesMobile: [
+            { id: "dataset", x: 150, y: 20 },
+            { id: "eda", x: 150, y: 100 },
+            { id: "clean", x: 150, y: 180 },
+            { id: "train", x: 150, y: 260 },
+            { id: "predict", x: 150, y: 340 },
+        ],
+        edges: [
+            { from: "dataset", to: "eda" },
+            { from: "eda", to: "clean" },
+            { from: "clean", to: "train" },
+            { from: "train", to: "predict" },
+        ],
+        notes: [],
+        links: {
+            live: "https://hassan-medical-insurance-cost-prediction.streamlit.app/",
+            repo: "https://github.com/hassan-khalid234/medical-insurance-cost-prediction",
+        },
+    },
 ];
