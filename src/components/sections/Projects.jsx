@@ -3,7 +3,7 @@ import PipelineSchematic from "../schematic/PipelineSchematic";
 
 export default function Projects() {
     return (
-        <section className="py-24 px-6 flex flex-col gap-24 items-center">
+        <section className="py-16 px-6 md:px-12 flex flex-col gap-20 items-center">
             {projects.map((p) => (
                 <div key={p.id} className="w-full max-w-4xl">
                     {/* desktop */}

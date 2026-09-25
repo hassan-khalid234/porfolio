@@ -18,6 +18,7 @@ body {
     background-color: var(--bp-bg);
     color: var(--bp-text);
     font-family: monospace;
+    overflow-x: hidden;
 }
 a:focus-visible {
   outline: 2px solid var(--bp-line-bright);
