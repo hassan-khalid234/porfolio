@@ -66,7 +66,12 @@ export default function PipelineSchematic({ project, mobile = false }) {
             <div className="mb-3 font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
                 {project.title}
             </div>
-            <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="overflow-visible">
+            <svg
+                width={w} height={h} viewBox={`0 0 ${w} ${h}`}
+                className="overflow-visible"
+                role="img"
+                aria-label={`Pipeline diagram for ${project.title}`}
+            >
                 {project.edges.map((e, i) => (
                     <Edge key={i} from={byId[e.from]} to={byId[e.to]} pathLength={pathLength} />
                 ))}

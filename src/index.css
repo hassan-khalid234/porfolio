@@ -18,3 +18,7 @@ body {
     color: var(--bp-text);
     font-family: monospace;
 }
+a:focus-visible {
+  outline: 2px solid var(--bp-line-bright);
+  outline-offset: 2px;
+}
