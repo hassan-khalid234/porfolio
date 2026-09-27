@@ -85,10 +85,10 @@ function Edge({ from, to, pathLength }) {
   );
 }
 
-function Note({ note, pos }) {
+function Note({ note, pos, offset = 45 }) {
   const lines = wrapText(note.text, 42);
   return (
-    <text x={pos.x} y={pos.y + 45} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="var(--bp-line)">
+    <text x={pos.x} y={pos.y + offset} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="var(--bp-line)">
       {lines.map((line, i) => (
         <tspan key={i} x={pos.x} dy={i === 0 ? 0 : 11}>{line}</tspan>
       ))}
@@ -124,11 +124,12 @@ function layoutDesktop(project, labelSize, subSize) {
 function layoutMobile(project, labelSize, subSize) {
   const ROW_H = 58;
   const BRANCH_GAP = 14;
+  const notedIds = new Set((project.notes || []).map((n) => n.at));
   const positions = {};
-  let row = 0;
+  let cursorY = 0;
 
   project.columns.forEach((col) => {
-    const y = row * ROW_H;
+    const y = cursorY;
     if (col.length === 1) {
       const w = Math.min(nodeWidth(project.nodeDefs[col[0]], labelSize, subSize), 150);
       positions[col[0]] = { x: 0, y, w };
@@ -142,7 +143,13 @@ function layoutMobile(project, labelSize, subSize) {
         cursor += w + BRANCH_GAP;
       });
     }
-    row += 1;
+
+    const notesHere = (project.notes || []).filter((n) => col.includes(n.at));
+    const noteExtra = notesHere.length
+      ? Math.max(...notesHere.map((n) => wrapText(n.text, 42).length)) * 11 + 16
+      : 0;
+
+    cursorY += ROW_H + noteExtra;
   });
 
   return positions;
@@ -231,7 +238,7 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
             ))}
             {project.notes.map((note, i) => {
               const pos = positions[note.at];
-              return pos ? <Note key={i} note={note} pos={pos} /> : null;
+              return pos ? <Note key={i} note={note} pos={pos} offset={mobile ? 26 : 45} /> : null;
             })}
           </svg>
         </div>
