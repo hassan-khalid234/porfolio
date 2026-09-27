@@ -33,3 +33,26 @@ a:focus-visible {
 .schematic-node:hover text {
   fill: var(--bp-line-bright) !important;
 }
+.schematic-sheet {
+  position: relative;
+}
+.schematic-sheet::before,
+.schematic-sheet::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+}
+.schematic-sheet::before {
+  top: -1px;
+  left: -1px;
+  border-top: 1px solid var(--bp-line-bright);
+  border-left: 1px solid var(--bp-line-bright);
+}
+.schematic-sheet::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 1px solid var(--bp-line-bright);
+  border-right: 1px solid var(--bp-line-bright);
+}
