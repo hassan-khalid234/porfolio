@@ -3,9 +3,9 @@ import PipelineSchematic from "../schematic/PipelineSchematic";
 
 export default function Projects() {
   return (
-    <section className="py-16 px-6 md:px-12 flex flex-col gap-16 items-center">
+    <section id="projects" className="py-16 px-6 md:px-12 flex flex-col gap-16 items-center scroll-mt-20">
       {projects.map((p, i) => (
-        <div key={p.id} className="w-full max-w-4xl">
+        <div key={p.id} id={p.id} className="w-full max-w-4xl scroll-mt-20">
           <div className="hidden md:block">
             <PipelineSchematic project={p} sheetNumber={i + 1} sheetTotal={projects.length} />
           </div>
