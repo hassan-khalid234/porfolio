@@ -6,12 +6,17 @@ export default function Hero() {
   const w = 520, h = 140;
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center gap-8">
+    <section className="min-h-screen flex flex-col justify-center items-center gap-8 px-4">
       <h1 className="sr-only">
         Muhammad Hassan — AI/LLM Application Engineer
       </h1>
 
-      <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="overflow-visible" aria-hidden="true">
+      <svg
+        viewBox={`0 0 ${w} ${h}`}
+        className="overflow-visible w-full"
+        style={{ maxWidth: 480, height: "auto" }}
+        aria-hidden="true"
+      >
         <motion.rect
           x={4} y={4} width={w - 8} height={h - 8}
           fill="none" stroke="var(--bp-line)" strokeWidth="1"
@@ -21,7 +26,7 @@ export default function Hero() {
         />
         <motion.text
           x={w / 2} y={h / 2 - 6} textAnchor="middle"
-          fontFamily="var(--font-sans, sans-serif)" fontWeight="700" fontSize="34"
+          fontFamily="var(--font-sans)" fontWeight="700" fontSize="34"
           fill="var(--bp-text)"
           initial={reduce ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -41,7 +46,9 @@ export default function Hero() {
         </motion.text>
       </svg>
 
-      <DimensionLine label="EST. 2027 — FINAL YEAR, UMT LAHORE" length={320} />
+      <div className="w-full flex justify-center" style={{ maxWidth: 480 }}>
+        <DimensionLine label="EST. 2027 — FINAL YEAR, UMT LAHORE" length={320} />
+      </div>
     </section>
   );
-} 
+}
