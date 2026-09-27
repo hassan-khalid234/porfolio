@@ -51,26 +51,23 @@ function CornerTicks({ w, h, size = 6 }) {
   );
 }
 
-function Node({ pos, def, lead }) {
-  const labelSize = lead ? 12 : 10;
-  const subSize = lead ? 8 : 7;
-  const h = def.sub ? (lead ? 54 : 48) : (lead ? 46 : 40);
+function Node({ pos, def, labelSize, subSize, subH, plainH, strokeW }) {
   const w = pos.w;
-
+  const h = def.sub ? subH : plainH;
   return (
     <g className="schematic-node" transform={`translate(${pos.x - w / 2}, ${pos.y - h / 2})`}>
       <rect
         width={w} height={h}
         fill="var(--bp-bg)"
         stroke={def.accent ? "var(--bp-accent)" : "var(--bp-line)"}
-        strokeWidth={lead ? 1.5 : 1}
+        strokeWidth={strokeW}
       />
       <CornerTicks w={w} h={h} />
-      <text x={w / 2} y={def.sub ? h / 2 - 3 : h / 2 + 4} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={labelSize} fontWeight={lead ? 600 : 400} fill="var(--bp-text)">
+      <text x={w / 2} y={def.sub ? h / 2 - 3 : h / 2 + 4} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={labelSize} fontWeight={def.accent ? 600 : 400} fill="var(--bp-text)">
         {def.label}
       </text>
       {def.sub && (
-        <text x={w / 2} y={h / 2 + 14} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={subSize} fill="var(--bp-line)">
+        <text x={w / 2} y={h / 2 + 13} textAnchor="middle" fontFamily="var(--font-mono)" fontSize={subSize} fill="var(--bp-line)">
           {def.sub}
         </text>
       )}
@@ -120,27 +117,53 @@ function layoutDesktop(project, labelSize, subSize) {
   return positions;
 }
 
+// Mobile: single node per column stays centered in its own row.
+// A two-node column (a branch) sits side by side WITHIN one row,
+// so query → {dense, sparse} still visually diverges and converges —
+// just rotated to fit a narrow screen instead of going fully linear.
 function layoutMobile(project, labelSize, subSize) {
-  const ROW_H = 68;
+  const ROW_H = 58;
+  const BRANCH_GAP = 14;
   const positions = {};
   let row = 0;
+
   project.columns.forEach((col) => {
-    col.forEach((id) => {
-      const w = Math.min(nodeWidth(project.nodeDefs[id], labelSize, subSize), 260);
-      positions[id] = { x: 0, y: row * ROW_H, w };
-      row += 1;
-    });
+    const y = row * ROW_H;
+    if (col.length === 1) {
+      const w = Math.min(nodeWidth(project.nodeDefs[col[0]], labelSize, subSize), 150);
+      positions[col[0]] = { x: 0, y, w };
+    } else {
+      const widths = col.map((id) => Math.min(nodeWidth(project.nodeDefs[id], labelSize, subSize), 128));
+      const totalW = widths[0] + widths[1] + BRANCH_GAP;
+      let cursor = -totalW / 2;
+      col.forEach((id, i) => {
+        const w = widths[i];
+        positions[id] = { x: cursor + w / 2, y, w };
+        cursor += w + BRANCH_GAP;
+      });
+    }
+    row += 1;
   });
+
   return positions;
 }
 
 export default function PipelineSchematic({ project, mobile = false, sheetNumber, sheetTotal }) {
   const { ref, pathLength } = useDraw(
-    mobile ? ["start 0.95", "start 0.55"] : ["start 0.8", "start 0.3"]
+    mobile ? ["start 0.9", "start 0.4"] : ["start 0.8", "start 0.3"]
   );
 
-  const labelSize = project.lead ? 12 : 10;
-  const subSize = project.lead ? 8 : 7;
+  const desktopLabelSize = project.lead ? 12 : 10;
+  const desktopSubSize = project.lead ? 8 : 7;
+  const mobileLabelSize = 9;
+  const mobileSubSize = 6.5;
+
+  const labelSize = mobile ? mobileLabelSize : desktopLabelSize;
+  const subSize = mobile ? mobileSubSize : desktopSubSize;
+  const subH = mobile ? 34 : (project.lead ? 54 : 48);
+  const plainH = mobile ? 28 : (project.lead ? 46 : 40);
+  const strokeW = mobile ? 1 : (project.lead ? 1.5 : 1);
+
   const positions = mobile
     ? layoutMobile(project, labelSize, subSize)
     : layoutDesktop(project, labelSize, subSize);
@@ -156,8 +179,11 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
   const vbH = maxY - minY;
 
   return (
-    <div ref={ref} className="w-full">
-      <div className="schematic-sheet border px-4 pt-4 pb-5 md:px-8 md:pt-6 md:pb-6" style={{ borderColor: "var(--bp-line)" }}>
+    <div className="w-full">
+      <div
+        className="schematic-sheet border relative px-4 pt-4 pb-16 md:px-8 md:pt-6 md:pb-16"
+        style={{ borderColor: "var(--bp-line)" }}
+      >
         <div className="flex items-baseline justify-between mb-1 font-mono" style={{ color: "var(--bp-line-bright)" }}>
           <span style={{ fontSize: project.lead ? "13px" : "11px", letterSpacing: project.lead ? "1px" : "0px" }}>
             {project.title}
@@ -173,11 +199,18 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
           {project.blurb}
         </p>
 
-        <div className="w-full overflow-x-auto">
+        {/* ref moved here — scroll tracking now matches the diagram itself,
+            not the whole panel including title/blurb, so the draw animation
+            actually triggers as the boxes come into view */}
+        <div ref={ref} className="w-full overflow-x-auto">
           <svg
             viewBox={`${minX} ${minY} ${vbW} ${vbH}`}
             className="overflow-visible block mx-auto"
-            style={{ width: "100%", maxWidth: mobile ? 320 : 900, height: "auto" }}
+            style={{
+              width: mobile ? Math.min(vbW, 300) : "100%",
+              maxWidth: mobile ? 300 : 900,
+              height: "auto",
+            }}
             role="img"
             aria-label={`Pipeline diagram for ${project.title}`}
           >
@@ -185,22 +218,22 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
               <Edge key={i} from={positions[e.from]} to={positions[e.to]} pathLength={pathLength} />
             ))}
             {ids.map((id) => (
-              <Node key={id} pos={positions[id]} def={project.nodeDefs[id]} lead={project.lead} />
+              <Node
+                key={id}
+                pos={positions[id]}
+                def={project.nodeDefs[id]}
+                labelSize={labelSize}
+                subSize={subSize}
+                subH={subH}
+                plainH={plainH}
+                strokeW={strokeW}
+              />
             ))}
             {project.notes.map((note, i) => {
               const pos = positions[note.at];
               return pos ? <Note key={i} note={note} pos={pos} /> : null;
             })}
           </svg>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-4 font-mono text-xs">
-          {project.links.live && (
-            <a href={project.links.live} target="_blank" rel="noreferrer" style={{ color: "var(--bp-line-bright)" }}>LIVE</a>
-          )}
-          {project.links.repo && (
-            <a href={project.links.repo} target="_blank" rel="noreferrer" style={{ color: "var(--bp-line-bright)" }}>REPO</a>
-          )}
         </div>
 
         {project.stack && (
@@ -212,6 +245,19 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
             ))}
           </div>
         )}
+
+        <div className="absolute bottom-3 right-3 flex gap-2">
+          {project.links.live && (
+            <a href={project.links.live} target="_blank" rel="noreferrer" className="schematic-btn">
+              LIVE
+            </a>
+          )}
+          {project.links.repo && (
+            <a href={project.links.repo} target="_blank" rel="noreferrer" className="schematic-btn">
+              REPO
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
