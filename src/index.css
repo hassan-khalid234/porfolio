@@ -56,3 +56,6 @@ a:focus-visible {
   border-bottom: 1px solid var(--bp-line-bright);
   border-right: 1px solid var(--bp-line-bright);
 }
+html {
+  scroll-behavior: smooth;
+}

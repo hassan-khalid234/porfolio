@@ -85,7 +85,7 @@ export const projects = [
     ],
     stack: ["FASTAPI", "SQLITE", "N8N", "GROQ", "JINJA2"],
     links: {
-      repo: "https://github.com/hassan-khalid234/ai-subscription-intelligence",
+      repo: "https://github.com/hassan-khalid234/subscription-ai-model",
     },
   },
   {

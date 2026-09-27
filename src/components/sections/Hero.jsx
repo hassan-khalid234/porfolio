@@ -6,7 +6,7 @@ export default function Hero() {
   const w = 520, h = 140;
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center gap-8 px-4">
+    <section id="hero" className="min-h-screen flex flex-col justify-center items-center gap-8 px-4">
       <h1 className="sr-only">
         Muhammad Hassan — AI/LLM Application Engineer
       </h1>

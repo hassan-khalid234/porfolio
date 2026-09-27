@@ -45,7 +45,7 @@ export default function Contact() {
   ];
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center gap-6 px-6">
+    <section id="contact" className="min-h-screen flex flex-col justify-center items-center gap-6 px-6 scroll-mt-20">
       <div className="font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
         CONTACT
       </div>
