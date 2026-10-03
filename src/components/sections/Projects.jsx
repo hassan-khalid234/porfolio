@@ -7,7 +7,7 @@ export default function Projects() {
       {projects.map((p, i) => (
         <div key={p.id} id={p.id} className="w-full max-w-4xl scroll-mt-20">
           <div className="hidden md:block">
-            <PipelineSchematic project={p} sheetNumber={i + 1} sheetTotal={projects.length} />
+            <PipelineSchematic project={p} sheetNumber={i + 2} sheetTotal={9} />
           </div>
           <div className="block md:hidden">
             <PipelineSchematic project={p} mobile sheetNumber={i + 1} sheetTotal={projects.length} />

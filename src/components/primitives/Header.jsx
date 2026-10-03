@@ -1,5 +1,6 @@
 const NAV_LINKS = [
   { label: "M.H.", href: "#hero", isBrand: true },
+  { label: "ABOUT", href: "#about" },
   {
     label: "PROJECTS",
     href: "#projects",
@@ -10,6 +11,8 @@ const NAV_LINKS = [
       { label: "MEDICAL INSURANCE", href: "#medical-insurance-prediction" },
     ],
   },
+  { label: "SKILLS", href: "#skills" },
+  { label: "TIMELINE", href: "#timeline" },
   { label: "CONTACT", href: "#contact" },
 ];
 

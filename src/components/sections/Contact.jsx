@@ -49,6 +49,10 @@ export default function Contact() {
       <div className="font-mono text-xs" style={{ color: "var(--bp-line-bright)" }}>
         CONTACT
       </div>
+      <div className="flex items-center gap-3 font-mono text-[11px]" style={{ color: "var(--bp-line-bright)" }}>
+        <span>TITLE BLOCK</span>
+        <span style={{ color: "var(--bp-line)" }}>SHEET 08 / 09</span>
+      </div>
       <TitleBlock fields={fields} />
     </section>
   );
