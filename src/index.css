@@ -72,3 +72,26 @@ html {
   background-color: var(--bp-line-bright);
   color: var(--bp-bg);
 }
+.cta-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  padding: 10px 22px;
+  border: 1px solid var(--bp-line-bright);
+  color: var(--bp-line-bright);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.cta-btn:hover {
+  background-color: var(--bp-line-bright);
+  color: var(--bp-bg);
+}
+.cta-btn-primary {
+  border-color: var(--bp-accent);
+  background-color: var(--bp-accent);
+  color: var(--bp-bg);
+}
+.cta-btn-primary:hover {
+  opacity: 0.85;
+  background-color: var(--bp-accent);
+  color: var(--bp-bg);
+}
