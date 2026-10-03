@@ -1,8 +1,16 @@
-export default function TitleBlock({ fields }) {
+export default function TitleBlock({ fields, bare = false }) {
   return (
     <div
-      className="schematic-sheet border px-5 py-5 sm:px-6 font-mono text-xs w-full max-w-[360px]"
-      style={{ borderColor: "var(--bp-line)", color: "var(--bp-text)" }}
+      className={
+        bare
+          ? "font-mono text-xs w-full"
+          : "schematic-sheet border px-5 py-5 sm:px-6 font-mono text-xs w-full max-w-[360px]"
+      }
+      style={
+        bare
+          ? { color: "var(--bp-text)" }
+          : { borderColor: "var(--bp-line)", color: "var(--bp-text)" }
+      }
     >
       {fields.map(({ label, value }, i) => (
         <div
