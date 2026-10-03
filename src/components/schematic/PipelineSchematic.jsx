@@ -51,14 +51,14 @@ function CornerTicks({ w, h, size = 6 }) {
   );
 }
 
-function Node({ pos, def, labelSize, subSize, subH, plainH, strokeW }) {
+function Node({ pos, def, labelSize, subSize, subH, plainH, strokeW, patternId }) {
   const w = pos.w;
   const h = def.sub ? subH : plainH;
   return (
     <g className="schematic-node" transform={`translate(${pos.x - w / 2}, ${pos.y - h / 2})`}>
       <rect
         width={w} height={h}
-        fill="var(--bp-bg)"
+        fill={def.accent ? `url(#${patternId})` : "var(--bp-bg)"}
         stroke={def.accent ? "var(--bp-accent)" : "var(--bp-line)"}
         strokeWidth={strokeW}
       />
@@ -221,6 +221,12 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
             role="img"
             aria-label={`Pipeline diagram for ${project.title}`}
           >
+            <defs>
+              <pattern id={`hatch-${project.id}`} patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+              <rect width="6" height="6" fill="var(--bp-bg)" />
+                <line x1="0" y1="0" x2="0" y2="6" stroke="var(--bp-accent)" strokeWidth="1" opacity="0.3" />
+              </pattern>
+            </defs>
             {project.edges.map((e, i) => (
               <Edge key={i} from={positions[e.from]} to={positions[e.to]} pathLength={pathLength} />
             ))}
@@ -230,16 +236,14 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
                 pos={positions[id]}
                 def={project.nodeDefs[id]}
                 labelSize={labelSize}
-                subSize={subSize}
+              subSize={subSize}
                 subH={subH}
                 plainH={plainH}
                 strokeW={strokeW}
+                patternId={`hatch-${project.id}`}
               />
             ))}
-            {project.notes.map((note, i) => {
-              const pos = positions[note.at];
-              return pos ? <Note key={i} note={note} pos={pos} offset={mobile ? 26 : 45} /> : null;
-            })}
+            {/* notes stay below, see Step 17 */}
           </svg>
         </div>
 
