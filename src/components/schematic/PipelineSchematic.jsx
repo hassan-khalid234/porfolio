@@ -85,6 +85,17 @@ function Edge({ from, to, pathLength }) {
   );
 }
 
+function RevBadge({ x, y, number }) {
+  return (
+    <g>
+      <circle cx={x} cy={y} r="8" fill="var(--bp-bg)" stroke="var(--bp-accent)" strokeWidth="1.2" />
+      <text x={x} y={y + 3} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="8" fill="var(--bp-accent)">
+        {number}
+      </text>
+    </g>
+  );
+}
+
 function Note({ note, pos, offset = 45 }) {
   const lines = wrapText(note.text, 42);
   return (
@@ -243,7 +254,20 @@ export default function PipelineSchematic({ project, mobile = false, sheetNumber
                 patternId={`hatch-${project.id}`}
               />
             ))}
-            {/* notes stay below, see Step 17 */}
+            {project.notes.map((note, i) => {
+              const pos = positions[note.at];
+              if (!pos) return null;
+              const def = project.nodeDefs[note.at];
+              const h = def.sub ? subH : plainH;
+              const badgeX = pos.x + pos.w / 2;
+              const badgeY = pos.y - h / 2;
+              return (
+                <g key={i}>
+                  <RevBadge x={badgeX} y={badgeY} number={i + 1} />
+                  <Note note={note} pos={pos} offset={mobile ? 26 : 45} />
+                </g>
+              );
+            })}
           </svg>
         </div>
 
