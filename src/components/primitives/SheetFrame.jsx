@@ -16,6 +16,30 @@ function CornerBracket({ position }) {
   );
 }
 
+function ZoneRefTop() {
+  const zones = ["A", "B", "C", "D", "E"];
+  return (
+    <div
+      className="fixed left-0 right-0 z-30 hidden md:flex justify-between px-8 pointer-events-none font-mono text-[9px]"
+      style={{ top: 54, color: "var(--bp-line)" }}
+    >
+      {zones.map((z) => <span key={z}>{z}</span>)}
+    </div>
+  );
+}
+
+function ZoneRefSide() {
+  const nums = ["1", "2", "3", "4", "5"];
+  return (
+    <div
+      className="fixed bottom-6 left-2 z-30 hidden md:flex flex-col justify-between pointer-events-none font-mono text-[9px]"
+      style={{ top: 70, color: "var(--bp-line)" }}
+    >
+      {nums.map((n) => <span key={n}>{n}</span>)}
+    </div>
+  );
+}
+
 export default function SheetFrame() {
   return (
     <>
@@ -23,6 +47,8 @@ export default function SheetFrame() {
       <CornerBracket position="top-right" />
       <CornerBracket position="bottom-right" />
       <CornerBracket position="bottom-left" />
+      <ZoneRefTop />
+      <ZoneRefSide />
     </>
   );
 }
