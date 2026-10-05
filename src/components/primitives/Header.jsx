@@ -1,19 +1,20 @@
+import { Link } from "react-router-dom";
+
 const NAV_LINKS = [
-  { label: "M.H.", href: "#hero", isBrand: true },
-  { label: "ABOUT", href: "#about" },
+  { label: "M.H.", to: "/", isBrand: true },
+  { label: "ABOUT", to: "/about" },
   {
     label: "PROJECTS",
-    href: "#projects",
+    to: "/projects",
     submenu: [
-      { label: "RAG COPILOT", href: "#rag-copilot" },
-      { label: "MOOD MIRROR", href: "#mood-mirror" },
-      { label: "SUBSCRIPTION INTEL", href: "#subscription-intel" },
-      { label: "MEDICAL INSURANCE", href: "#medical-insurance-prediction" },
+      { label: "RAG COPILOT", to: "/projects#rag-copilot" },
+      { label: "MOOD MIRROR", to: "/projects#mood-mirror" },
+      { label: "SUBSCRIPTION INTEL", to: "/projects#subscription-intel" },
+      { label: "MEDICAL INSURANCE", to: "/projects#medical-insurance-prediction" },
     ],
   },
-  { label: "SKILLS", href: "#skills" },
-  { label: "TIMELINE", href: "#timeline" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "SKILLS", to: "/skills" },
+  { label: "CONTACT", to: "/contact" },
 ];
 
 export default function Header() {
@@ -28,20 +29,20 @@ export default function Header() {
     >
       <nav className="flex items-center justify-between px-6 md:px-12 py-3 font-mono text-xs">
         {NAV_LINKS.filter((l) => l.isBrand).map((l) => (
-          <a key={l.label} href={l.href} style={{ color: "var(--bp-line-bright)" }}>
+          <Link key={l.label} to={l.to} style={{ color: "var(--bp-line-bright)" }}>
             {l.label}
-          </a>
+          </Link>
         ))}
         <ul className="flex gap-6">
           {NAV_LINKS.filter((l) => !l.isBrand).map((link) => (
             <li key={link.label} className="relative group">
-              <a
-                href={link.href}
+              <Link
+                to={link.to}
                 className="transition-colors"
                 style={{ color: "var(--bp-text)", letterSpacing: "1px" }}
               >
                 {link.label}
-              </a>
+              </Link>
               {link.submenu && (
                 <ul
                   className="absolute left-0 top-full mt-2 hidden group-hover:flex flex-col border py-2 min-w-[200px]"
@@ -49,13 +50,13 @@ export default function Header() {
                 >
                   {link.submenu.map((sub) => (
                     <li key={sub.label}>
-                      <a
-                        href={sub.href}
+                      <Link
+                        to={sub.to}
                         className="block px-4 py-1.5 whitespace-nowrap hover:opacity-80"
                         style={{ color: "var(--bp-text)" }}
                       >
                         {sub.label}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import DimensionLine from "../primitives/DimensionLine";
 
@@ -62,7 +63,7 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <a href="#projects" className="cta-btn cta-btn-primary">VIEW PROJECTS</a>
+          <Link to="/projects" className="cta-btn cta-btn-primary">VIEW PROJECTS</Link>
           <a href={RESUME_URL} target="_blank" rel="noreferrer" className="cta-btn">VIEW RESUME / CV</a>
         </div>
       </div>

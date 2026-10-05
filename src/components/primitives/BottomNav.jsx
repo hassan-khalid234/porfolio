@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 const NAV_ITEMS = [
-  { id: "hero", label: "HOME", icon: "home" },
-  { id: "about", label: "ABOUT", icon: "about" },
-  { id: "projects", label: "PROJECTS", icon: "projects" },
-  { id: "skills", label: "SKILLS", icon: "skills" },
-  { id: "contact", label: "CONTACT", icon: "contact" },
+  { to: "/", label: "HOME", icon: "home" },
+  { to: "/about", label: "ABOUT", icon: "about" },
+  { to: "/projects", label: "PROJECTS", icon: "projects" },
+  { to: "/skills", label: "SKILLS", icon: "skills" },
+  { to: "/contact", label: "CONTACT", icon: "contact" },
 ];
 
 function Icon({ name }) {
@@ -67,16 +69,16 @@ export default function BottomNav() {
       }}
     >
       {NAV_ITEMS.map((item) => (
-        <a
-          key={item.id}
-          href={`#${item.id}`}
-          aria-label={item.label}
-          className="bottomnav-item flex items-center justify-center w-10 h-10 rounded-full transition-colors"
-          style={{ color: "var(--bp-line-bright)" }}
+        <Link
+            key={item.to}
+            to={item.to}
+            aria-label={item.label}
+            className="bottomnav-item flex items-center justify-center w-10 h-10 rounded-full transition-colors"
+            style={{ color: "var(--bp-line-bright)" }}
         >
-          <Icon name={item.icon} />
-        </a>
-      ))}
+            <Icon name={item.icon} />
+        </Link>
+        ))}
     </nav>
   );
 }
