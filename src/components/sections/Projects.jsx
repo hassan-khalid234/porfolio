@@ -10,7 +10,7 @@ export default function Projects() {
             <PipelineSchematic project={p} sheetNumber={i + 2} sheetTotal={9} />
           </div>
           <div className="block md:hidden">
-            <PipelineSchematic project={p} mobile sheetNumber={i + 1} sheetTotal={projects.length} />
+            <PipelineSchematic project={p} sheetNumber={i + 2} sheetTotal={9} />
           </div>
         </div>
       ))}

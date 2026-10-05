@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import DimensionLine from "../primitives/DimensionLine";
 
-const RESUME_URL = "PASTE_YOUR_RESUME_LINK_HERE";
+const RESUME_URL = "/resume.pdf";
 
 export default function Hero() {
   const reduce = useReducedMotion();
