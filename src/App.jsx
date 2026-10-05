@@ -8,6 +8,7 @@ import Projects from "./components/sections/Projects";
 import Skills from "./components/sections/Skills";
 import Timeline from "./components/sections/Timeline";
 import Contact from "./components/sections/Contact";
+import BottomNav from "./components/primitives/BottomNav";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <GridBackground />
       <SheetFrame />
       <Header />
+      <BottomNav />
       <Hero />
       <SectionDivider label="ABOUT" />
       <About />

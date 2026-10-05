@@ -19,7 +19,7 @@ const NAV_LINKS = [
 export default function Header() {
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 border-b"
+      className="hidden md:block fixed top-0 left-0 right-0 z-50 border-b"
       style={{
         borderColor: "var(--bp-line)",
         backgroundColor: "rgba(10, 25, 41, 0.85)",
