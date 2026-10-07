@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LiquidGlass from "liquid-glass-react";
 
 const NAV_ITEMS = [
   { to: "/", label: "HOME", icon: "home" },
@@ -60,25 +61,27 @@ function Icon({ name }) {
 
 export default function BottomNav() {
   return (
-    <nav
-      className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex md:hidden gap-1 px-3 py-2 rounded-full border"
-      style={{
-        borderColor: "var(--bp-line)",
-        backgroundColor: "rgba(10, 25, 41, 0.9)",
-        backdropFilter: "blur(10px)",
-      }}
-    >
-      {NAV_ITEMS.map((item) => (
-        <Link
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:hidden">
+      <LiquidGlass
+        cornerRadius={999}
+        padding="8px 12px"
+        blurAmount={0.08}
+        saturation={140}
+        elasticity={0.1}
+        className="flex gap-1"
+      >
+        {NAV_ITEMS.map((item) => (
+          <Link
             key={item.to}
             to={item.to}
             aria-label={item.label}
-            className="bottomnav-item flex items-center justify-center w-10 h-10 rounded-full transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-full"
             style={{ color: "var(--bp-line-bright)" }}
-        >
+          >
             <Icon name={item.icon} />
-        </Link>
+          </Link>
         ))}
-    </nav>
+      </LiquidGlass>
+    </div>
   );
 }
