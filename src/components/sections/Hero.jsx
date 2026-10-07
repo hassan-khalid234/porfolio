@@ -1,72 +1,58 @@
-import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
 import DimensionLine from "../primitives/DimensionLine";
 
 const RESUME_URL = "/resume.pdf";
 
 export default function Hero() {
   const reduce = useReducedMotion();
-  const w = 520, h = 140;
+  const fadeUp = (delay) => ({
+    initial: reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+    animate: { opacity: 1, y: 0 },
+    transition: reduce ? { duration: 0 } : { delay, duration: 0.6, ease: "easeOut" },
+  });
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center px-4 py-20">
-      <div
-        className="schematic-sheet border w-full max-w-2xl px-6 py-10 md:px-10 md:py-14 flex flex-col items-center gap-8"
-        style={{ borderColor: "var(--bp-line)" }}
+    <section
+      id="hero"
+      className="min-h-screen flex flex-col items-center px-4 pt-20 pb-16 gap-6 text-center"
+    >
+      <motion.h1
+        {...fadeUp(0.1)}
+        className="font-bold"
+        style={{ fontFamily: "var(--font-sans)", color: "var(--bp-text)", fontSize: "clamp(2rem, 6vw, 3rem)" }}
       >
-        <div className="w-full flex items-baseline justify-between font-mono text-[10px]" style={{ color: "var(--bp-line)" }}>
-          <span>COVER SHEET</span>
-          <span>SHEET 00 / 09</span>
-        </div>
+        MUHAMMAD HASSAN
+      </motion.h1>
 
-        <h1 className="sr-only">
-          Muhammad Hassan — AI/LLM Application Engineer
-        </h1>
+      <motion.p
+        {...fadeUp(0.3)}
+        className="font-mono text-sm tracking-widest"
+        style={{ color: "var(--bp-line-bright)" }}
+      >
+        AI/LLM APPLICATION ENGINEER
+      </motion.p>
 
-        <svg
-          viewBox={`0 0 ${w} ${h}`}
-          className="overflow-visible w-full"
-          style={{ maxWidth: 480, height: "auto" }}
-          aria-hidden="true"
-        >
-          <motion.rect
-            x={4} y={4} width={w - 8} height={h - 8}
-            fill="none" stroke="var(--bp-line)" strokeWidth="1"
-            initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={reduce ? { duration: 0 } : { duration: 1.4, ease: "easeInOut" }}
-          />
-          <motion.text
-            x={w / 2} y={h / 2 - 6} textAnchor="middle"
-            fontFamily="var(--font-sans)" fontWeight="700" fontSize="34"
-            fill="var(--bp-text)"
-            initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={reduce ? { duration: 0 } : { delay: 1.1, duration: 0.6 }}
-          >
-            MUHAMMAD HASSAN
-          </motion.text>
-          <motion.text
-            x={w / 2} y={h / 2 + 24} textAnchor="middle"
-            fontFamily="var(--font-mono)" fontSize="13" letterSpacing="2"
-            fill="var(--bp-line-bright)"
-            initial={reduce ? { opacity: 1 } : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={reduce ? { duration: 0 } : { delay: 1.3, duration: 0.6 }}
-          >
-            AI/LLM APPLICATION ENGINEER
-          </motion.text>
-        </svg>
+      <motion.div {...fadeUp(0.45)}>
+        <DimensionLine label="EST. 2027 — FINAL YEAR, UMT LAHORE" length={320} />
+      </motion.div>
 
-        <div className="w-full flex justify-center" style={{ maxWidth: 480 }}>
-          <DimensionLine label="EST. 2027 — FINAL YEAR, UMT LAHORE" length={320} />
-        </div>
+      <motion.p
+        {...fadeUp(0.6)}
+        className="max-w-xl text-sm leading-relaxed"
+        style={{ fontFamily: "var(--font-sans)", color: "var(--bp-text)" }}
+      >
+        Final-year IT student building toward a career as an AI/LLM
+        Application Engineer. Hands-on with retrieval-augmented generation
+        pipelines, applied NLP, and end-to-end ML workflows — from a
+        framework-free RAG system to a completed machine-learning
+        internship.
+      </motion.p>
 
-        <div className="flex flex-wrap justify-center gap-3">
-          <Link to="/projects" className="cta-btn cta-btn-primary">VIEW PROJECTS</Link>
-          <a href={RESUME_URL} target="_blank" rel="noreferrer" className="cta-btn">VIEW RESUME / CV</a>
-        </div>
-      </div>
+      <motion.div {...fadeUp(0.75)} className="flex flex-wrap justify-center gap-3 mt-2">
+        <Link to="/projects" className="cta-btn cta-btn-primary">VIEW PROJECTS</Link>
+        <a href={RESUME_URL} target="_blank" rel="noreferrer" className="cta-btn">VIEW RESUME / CV</a>
+      </motion.div>
     </section>
   );
 }
