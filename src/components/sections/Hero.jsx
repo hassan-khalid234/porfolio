@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import DimensionLine from "../primitives/DimensionLine";
-import { useNavigate } from "react-router-dom";
-import GlassButton from "../primitives/GlassButton";
 
 const RESUME_URL = "/resume.pdf";
 
 export default function Hero() {
-  const navigate = useNavigate();
   const reduce = useReducedMotion();
   const w = 520, h = 140;
 
@@ -66,12 +63,8 @@ export default function Hero() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-3">
-          <GlassButton accent onActivate={() => navigate("/projects")}>
-            VIEW PROJECTS
-          </GlassButton>
-          <GlassButton onActivate={() => window.open(RESUME_URL, "_blank", "noopener,noreferrer")}>
-            VIEW RESUME / CV
-          </GlassButton>
+          <Link to="/projects" className="cta-btn cta-btn-primary">VIEW PROJECTS</Link>
+          <a href={RESUME_URL} target="_blank" rel="noreferrer" className="cta-btn">VIEW RESUME / CV</a>
         </div>
       </div>
     </section>
